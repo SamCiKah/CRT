@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+.first-section {
+ background-color: white;
+}
+
+.second-section {
+
+  height: 100vh;
+  width: 100%;
+ background-color: white; 
+}
+
+.third-section {
+  height: 100vh;
+  width: 100%;
+ background-color: white;  
+}
+
+h1 {
+font-family: 'Roboto Mono', monospace;
+}
+
+
+.my-font {
+font-family: 'Roboto Mono', monospace;
+}

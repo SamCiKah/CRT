@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Lottie Animation</title>
+    <style>
+      .contain {
+        width: 500px;
+        height: 300px;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid #000;
+      }
+
+      #movable {
+        width: 100px;
+        height: 50px; 
+        background-color: blue;
+        display: flex;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        cursor: grab;
+        user-select: none;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="contain">
+    <div id="lottie-container" style="background-color: aqua; width: 320px; height: 180px; border: 30px, brown;"></div>
+    <div id="movable">Drag Me</div>
+    </div>
+    
+    <script src="/crt.js"></script>
+  </body>
+</html>

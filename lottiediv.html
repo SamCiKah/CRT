@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Draggable Div with JSON Animation</title>
+        <style>
+        #container {
+        position: relative;
+        width: 500px; 
+        height: 200px; 
+        border: 2px solid #ccc; 
+        overflow: hidden;
+        }
+        
+        #animation-wrapper {
+        width: 300px; 
+        height: 200px;
+        position: absolute; 
+        left: 0;
+        top: 0;
+        }
+        
+        #draggable {
+        width: 50px; 
+        height: 100px; 
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: space-between; */
+        right: 0; 
+        top: 150px; 
+        cursor: move; 
+        user-select: none; 
+        text-align: center;
+        align-content: center;
+        }
+
+        .north {
+            height: 50px;
+            background-color: #db3434;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .south {
+            height: 50px;
+            background-color: #3498db;
+            padding-top: 10px;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div id="animation-wrapper"></div>
+            <div id="draggable">
+                <div class="north">N</div>
+                <div class="south">S</div>
+            </div>
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+        
+        <script>
+            const initialFrame = 12;
+
+            // Load Lottie animation
+            const animWrapper = document.getElementById('animation-wrapper');
+            const animation = lottie.loadAnimation({ 
+            container: animWrapper,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: '/crt.json',
+            });
+
+            animation.addEventListener('data_ready', () => {
+                //console.log('Animation data loaded, total frames:', animation.totalFrames);
+                animation.goToAndStop(Math.min(initialFrame, animation.totalFrames - 1), true);
+                }
+            );
+
+                      
+            // Draggable div logic
+            const draggable = document.getElementById('draggable');
+            const container = document.getElementById('container');
+            let isDragging = false;
+            let currentX = 0;
+            let currentY = 0;
+            let initialX;
+            let initialY;
+            
+            draggable.addEventListener('mousedown', startDragging);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDragging);
+            
+            function startDragging(e) {
+            isDragging = true;
+            initialX = e.clientX - currentX;
+            initialY = e.clientY - currentY;
+            }
+            
+            function drag(e) {
+            if (isDragging) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            
+            
+            // Keep within container bounds
+            currentX = Math.max(0, Math.min(currentX, container.offsetWidth - draggable.offsetWidth));
+            currentY = Math.max(0, Math.min(currentY, container.offsetHeight - draggable.offsetHeight));
+            
+            draggable.style.left = currentX + 'px';
+            draggable.style.top = currentY + 'px';
+            
+            // Check if draggable is on the right side (past animation width)
+            const isOnRightSide = currentX > (container.offsetWidth / 2);
+            if (isOnRightSide) {
+            // Map vertical position (0 to container height) to animation progress (0 to 1) 
+            const progress = currentY / (container.offsetHeight - draggable.offsetHeight);
+            animation.goToAndStop(progress * animation.totalFrames, true);
+            }
+            }
+            }
+            
+            function stopDragging() {
+            isDragging = false;
+            animation.goToAndStop(12, true);
+            }
+            
+            // Initialize position 
+            currentX = container.offsetWidth - draggable.offsetWidth;
+            currentY = 100;
+            draggable.style.left = currentX + 'px';
+            draggable.style.top = currentY + 'px';
+    </script>
+    </body>
+</html>
