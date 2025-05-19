@@ -17,7 +17,7 @@ container.addEventListener('mousemove', (event) => {
   const y = event.clientY - rect.top;  // Y position relative to container
 
   // Calculate percentage positions
-  //const xPercent = x / rect.width;  // 0 to 1
+  const xPercent = x / rect.width;  // 0 to 1
   const yPercent = y / rect.height; // 0 to 1
 
   // Determine the frame based on the Y position

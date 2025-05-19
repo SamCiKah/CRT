@@ -1,27 +1,0 @@
-Adobe After Effects v22.0 Windows 64 render log for project “crt.aep”
-
-Rendering started on 2/1/2025 at 02:03:53
-
-  2/1/2025 02:03:53: Starting composition “tempConverterComp”.
-
-  Output To: C:\Users\SamCiKah\AppData\Local\LottieFiles for After Effects\images\188-Magnet.png    2/1/2025 02:03:53: Finished composition “tempConverterComp”.
-
-
-  2/1/2025 02:03:53: Starting composition “tempConverterComp”.
-
-  Output To: C:\Users\SamCiKah\AppData\Local\LottieFiles for After Effects\images\249-Labels.png    2/1/2025 02:03:53: Finished composition “tempConverterComp”.
-
-
-  2/1/2025 02:03:53: Starting composition “tempConverterComp”.
-
-  Output To: C:\Users\SamCiKah\AppData\Local\LottieFiles for After Effects\images\203-CRT.png    2/1/2025 02:03:53: Finished composition “tempConverterComp”.
-
-
-  2/1/2025 02:03:53: Starting composition “tempConverterComp”.
-
-  Output To: C:\Users\SamCiKah\AppData\Local\LottieFiles for After Effects\images\142-BG.png    2/1/2025 02:03:53: Finished composition “tempConverterComp”.
-
-
-  Total Time Elapsed: 0 Seconds
-Log closed on 2/1/2025 at 02:03:53
-

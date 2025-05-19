@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+h1 {
+font-family: 'Roboto Mono', monospace;
+}
+
+.my-font {
+font-family: 'Roboto Mono', monospace;
+}
+
+.card-holder {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 200px;
+                width: 200px;
+}
+
+.cards {
+        height: 150px;
+        width: 200px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        /* text-align: center; */
+        background-color: aquamarine;
+        box-shadow: 0 0 5px;
+        border-radius: 20px;
+}
+
+/* CRT */
+.container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 80vw;
+      height: 350px;
+      /* border: 1px solid #000; */
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .crt {
+      width: 70%;
+      height: 100%;
+    }
+
+    .magnet {
+      width: 50px;
+      height: 100px;
+      cursor: move;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      right: 0;
+      transition: transform 0.3s;
+    }
+
+    .north,
+    .south {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .north {
+      background: red;
+    }
+
+    .south {
+      background: blue;
+    }
