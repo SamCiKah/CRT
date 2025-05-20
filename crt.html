@@ -36,8 +36,11 @@
     const crt = document.getElementById('crt');
     const containerWidth = container.offsetWidth;
     let isDragging = false;
+    let startPos = {x: 0, y: 0, offsetX: 0, offsetY: 0};
     let currentX = containerWidth - magnet.offsetWidth; // Start at right
     let rotation = 0;
+    let lastTapTime = 0;
+    let lastTapPos = { x: 0, y: 0 };
 
     // Load Lottie animation
     const anim = lottie.loadAnimation({
@@ -53,17 +56,17 @@
       anim.goToAndStop(12, true);
     });
 
-    // Custom drag functionality
-    magnet.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (isDragging) {
+    // document.addEventListener('mousemove', (e) => {
+    //   if (isDragging) {
+    //     const containerRect = container.getBoundingClientRect();
+    //     let newX = e.clientX - containerRect.left - magnet.offsetWidth / 2;
+    //     let newY = e.clientY - containerRect.top - magnet.offsetHeight / 2;
+    
+    // Unified drag handling for mouse and touch
+    function moveMagnet(clientX, clientY) {
         const containerRect = container.getBoundingClientRect();
-        let newX = e.clientX - containerRect.left - magnet.offsetWidth / 2;
-        let newY = e.clientY - containerRect.top - magnet.offsetHeight / 2;
+        let newX = clientX - containerRect.left - startPos.offsetX;
+        let newY = clientY - containerRect.top - startPos.offsetY;
 
         // Restrict to right half of container
         const minX = containerWidth / 1.3 - magnet.offsetWidth;
@@ -80,6 +83,25 @@
         magnet.style.right = 'auto';
 
         updateAnimation();
+    }
+
+    // Custom mouse drag functionality
+    magnet.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      const rect = magnet.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      startPos = {
+        x: e.clientX,
+        y: e.clientY,
+        offsetX: e.clientX - containerRect.left - currentX,
+        offsetY: e.clientY - containerRect.top - currentY
+      };
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        moveMagnet(e.clientX, e.clientY);
       }
     });
 
@@ -87,7 +109,34 @@
       isDragging = false;
     });
 
-    // Rotate magnet on double-click
+    // touch drag events
+     magnet.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      const touch = e.touches[0];
+      const rect = magnet.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      startPos = {
+        x: touch.clientX,
+        y: touch.clientY,
+        offsetX: touch.clientX - containerRect.left - currentX,
+        offsetY: touch.clientY - containerRect.top - currentY
+      };
+      e.preventDefault();
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (isDragging) {        
+        const touch = e.touches[0];
+        moveMagnet(touch.clientX, touch.clientY);
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // double-click for mouse
     magnet.addEventListener('dblclick', () => {
       rotation = (rotation + 180) % 360;
       magnet.style.transform = `rotate(${rotation}deg)`;
@@ -95,6 +144,31 @@
         updateAnimation()
       }, 350)
     });
+
+    // double tap for touch
+    magnet.addEventListener('touchstrat', (e) => {
+      const currentTime = new Date().getTime();
+      const tapX = e.touches[0].clientX;
+      const tapY = e.touches[0].clientY;
+      const timeSinceLastTap = currentTime - lastTapTime;
+      const tapDistance = Math.sqrt(
+        Math.pow(tapX - lastTapPos.x, 2) + Math.pow(tapY - lastTapPos.y, 2)
+      );
+    
+
+    // check for double-tap (within 300ms and 30px)
+    if (timeSinceLastTap < 300 && tapDistance < 30) {
+      rotation = (rotation + 180) %360;
+      magnet.style.transform = `rotate(${rotation}deg)`;
+            setTimeout(() => {
+        updateAnimation()
+      }, 350)
+    }
+
+    lastTapTime = currentTime;
+    lastTapPos = { x: tapX, y:  tapY };
+    });
+
 
     // Update animation based on proximity and north position
     function updateAnimation() {
