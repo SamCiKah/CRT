@@ -148,8 +148,9 @@
     // double tap for touch
     magnet.addEventListener('touchstrat', (e) => {
       const currentTime = new Date().getTime();
-      const tapX = e.touches[0].clientX;
-      const tapY = e.touches[0].clientY;
+      const touch = e.touches[0];
+      const tapX = touches.clientX;
+      const tapY = touches.clientY;
       const timeSinceLastTap = currentTime - lastTapTime;
       const tapDistance = Math.sqrt(
         Math.pow(tapX - lastTapPos.x, 2) + Math.pow(tapY - lastTapPos.y, 2)
