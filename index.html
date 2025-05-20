@@ -5,14 +5,49 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>David Lesson</title>
         <link rel="stylesheet" href="style.css">
-        <link rel="manifest" href="/manifest.json">
+        <link rel="manifest" href="manifest.json">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+        <link rel="manifest" href="site.webmanifest">
         <meta name="theme-color" content="#3F9D52">     
     </head>
     <body>
-        <div style="text-align: center;"><h1>LESSON ILLUSTRATIONS</h1></div>
-        <div class="card-holder">
-            <a class="cards" href="crt.html"></a>
-            <h3>Cathode Ray Tube</h3>
+        <div><h1>LESSON ILLUSTRATIONS</h1></div>
+        <div class="gen">
+            <div class="card-holder">
+                <a class="cards" href="crt.html">
+                    <img src="images/crt.png" alt="">
+                </a>
+                <h3>Cathode Ray Tube</h3>
+            </div>
+
+            <!-- <div class="card-holder">
+                <a class="cards" href="crt.html">
+                    <img src="images/crt.png" alt="">
+                </a>
+                <h3>Cathode Ray Tube</h3>
+            </div>
+
+            <div class="card-holder">
+                <a class="cards" href="crt.html">
+                    <img src="images/crt.png" alt="">
+                </a>
+                <h3>Cathode Ray Tube</h3>
+            </div>
+
+            <div class="card-holder">
+                <a class="cards" href="crt.html">
+                    <img src="images/crt.png" alt="">
+                </a>
+                <h3>Cathode Ray Tube</h3>
+            </div>
+
+            <div class="card-holder">
+                    <a class="cards" href="crt.html">
+                        <img src="images/crt.png" alt="">
+                    </a>
+                    <h3>Cathode Ray Tube</h3>
+            </div> -->
         </div>
 
         <div id="installPrompt" style="display:none; position:fixed; bottom:20px; left:20px; background:#0d47a1; color:#fff; padding:15px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:9999;">
@@ -20,33 +55,58 @@
             <button onclick="installApp()" style="padding:8px 12px; background:#fff; color:#0d47a1; border:none; border-radius:5px;">Install</button>
         </div>
         
-        
         <script>
-            let deferredPrompt;
+                if ("serviceWorker" in navigator) {
+                    navigator.serviceWorker.register("/sw.js")
+                    .then(reg => console.log("Service Worker registered ✅"))
+                    .catch(err => console.error("Service Worker error ❌", err));
+                }
 
-            window.addEventListener('beforeinstallprompt', (e) => {
-                // Prevent automatic prompt
-                e.preventDefault();
-                deferredPrompt = e;
 
-                // Show your custom install button or popup
-                document.getElementById("installPrompt").style.display = "block";
-            });
+                let deferredPrompt;
+                window.addEventListener('beforeinstallprompt', event => {
+                event.preventDefault();
+                deferredPrompt = event;
+                document.getElementById('installBtn').style.display = 'block';
+                });
 
-            function installApp() {
-                if (deferredPrompt) {
+                document.getElementById('installBtn').addEventListener('click', () => {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                    } else {
-                    console.log('User dismissed the install prompt');
+                deferredPrompt.userChoice.then(choice => {
+                    if (choice.outcome === 'accepted') {
+                    console.log('PWA installed');
                     }
                     deferredPrompt = null;
-                    document.getElementById("installPrompt").style.display = "none";
                 });
+                });
+        </script>
+        
+        <script>
+                // let deferredPrompt;
+
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    // Prevent automatic prompt
+                    e.preventDefault();
+                    deferredPrompt = e;
+
+                    // Show your custom install button or popup
+                    document.getElementById("installPrompt").style.display = "block";
+                });
+
+                function installApp() {
+                    if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        } else {
+                        console.log('User dismissed the install prompt');
+                        }
+                        deferredPrompt = null;
+                        document.getElementById("installPrompt").style.display = "none";
+                    });
+                    }
                 }
-            }
         </script>
     </body>
 </html>

@@ -1,30 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
-h1 {
-font-family: 'Roboto Mono', monospace;
+body {
+      font-family: 'Roboto Mono', monospace;
+      text-align: center;
+      /* background-color: rgb(76, 76, 76); */
 }
 
-.my-font {
-font-family: 'Roboto Mono', monospace;
+img {
+      width: 90%;
+}
+
+.gen {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 10px;
+  row-gap: 20px;
+  justify-items: center;
+  position: relative;
+  margin: 50px auto;
+  padding: 20px;
+  /* background-color: brown; */
 }
 
 .card-holder {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                height: 200px;
-                width: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 30vh;
+        width: max(20vw);
 }
 
 .cards {
-        height: 150px;
-        width: 200px;
+        height: 70%;
+        width: 20vw;
         display: flex;
         align-items: center;
+        justify-content: center;
         text-decoration: none;
-        /* text-align: center; */
-        background-color: aquamarine;
-        box-shadow: 0 0 5px;
+        background-color: rgb(31, 27, 27);
+        box-shadow: 0 0 5px red;
         border-radius: 20px;
 }
 
